@@ -1,0 +1,64 @@
+<header class="md-whiteframe-z1">
+  <div class="nav_item l_inline" ng-click="go('/')"><i class="fa fa-align-justify"></i></div>
+  <div class="nav_item l_inline" ng-click="go('/about')">如何使用</div>
+  <input class="fs" ng-model="query"><i class="fa fa-search"></i>
+</header>
+
+<div id="content">
+<div class="wrapper">
+  <div class="l_center">
+  <div class="l_inline ctop_item" ng-repeat="c in candidates" ng-if="c.election_state === 'join'"
+       ng-click="toggleCandidate(c.id)"
+       >
+  	  <img class="c_img" ng-src="images/candidates_avatar/{{c.id}}.jpg" ng-class="{'ctop_asked':c.filter === 'asked','ctop_responded':c.filter === 'responded','ctop_pending':c.filter === 'pending','ctop_notasked':c.filter === 'notasked'}">
+
+  </div>
+  </div>
+
+  <!--ng-if="shouldShow(q.id)"-->
+  共有 {{(questions | filter:query | filter: shouldShowFilter).length}} 題，最近更新時間：11/07 14:40
+  <div ng-repeat="q in questions | filter:query | filter: shouldShowFilter | orderBy: 'signatures_count' : true" ng-class="{'md-whiteframe-z1':showQuestion(q.id),'q_item_active':showQuestion(q.id)}" class="q_item" >
+
+    <div class="q_title l_inline" ng-class="{'q_title_active':showQuestion(q.id)}" ng-click="toggleQuestion(q.id)">
+      <div class="q_vote l_inline">{{q.signatures_count | number:0}}</div>
+      {{q.title | limitTo:40}}{{(q.title).length>40?'...':''}}
+
+    <!-- function tab goes here -->
+        <a target="_blank" href="//taipei.wethepeople.tw/#!/question/{{q.id}}"><i class="fa fa-cube"></i></a>
+    <!-- ...................... -->
+    </div>
+
+    <div class="q_content" ng-if="showQuestion(q.id)">
+        <div class="q_postdate l_inline">{{q.post_timestamp | date:'MM / dd'}}</div>
+        <p class="q_text" ng-repeat="p in q.content">{{p}}</p>
+
+        <div class="r_item" ng-repeat="r in q.responses" ng-if="r.content">
+            <div class="r_img l_inline l_vtop"><img ng-src="images/candidates_avatar/{{r.responser}}.jpg"></div>
+
+            <div class="r_preview l_inline" ng-click="toggleResponse(r.id)">
+              <span ng-if="!showResponse(r.id)">{{r.content | htmlToPlaintext| limitTo:100}}{{(r.content | htmlToPlaintext).length>100?'...':''}}
+              </span>
+              <div class="r_responser_name l_inline" ng-if="showResponse(r.id)">{{candidates[r.responser].name}}回答</div>
+            </div>
+            <div class="r_content l_inline" ng-bind-html="toTrusted(r.content)" ng-if="showResponse(r.id)"></div>
+
+
+            <div class="r_postdate l_inline l_vtop">{{r.postTimeStamp | date:'MM / dd'}}</div>
+
+        </div>
+
+
+        <div class="q_pending_candidates l_center">
+            <h3 ng-if="q.pendingCount > 0">娃，我們還在等待以下候選人的回覆 :</h3>
+            <h3 ng-if="q.pendingCount === 0">Ya! 所有被提問候選人都已回覆 :)</h3>
+            <span ng-repeat="c in candidates">
+               <img class="c_img" ng-src="images/candidates_avatar_bw/{{c.id}}.jpg" ng-if="c[q.id]==='pending'">
+            </span>
+        </div>
+
+
+
+  </div>
+</div>
+</div>
+</div>

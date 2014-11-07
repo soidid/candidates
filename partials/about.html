@@ -1,0 +1,28 @@
+<header class="md-whiteframe-z1">
+  <div class="nav_item l_inline" ng-click="go('/')"><i class="fa fa-align-justify"></i></div>
+  <div class="nav_item l_inline" ng-click="go('/about')">如何使用</div>
+  <input class="fs" ng-model="query"><i class="fa fa-search"></i>
+</header>
+
+<div id="content">
+<div class="wrapper whitebg md-whiteframe-z1">
+  <h2>使用說明</h2>
+  <ul>
+    <li>沒有顏色：代表候選人的回答及是否有被問，不列入 fitler 考慮。</li>
+    <li>藍色：代表顯示該候選人「有被提問」的題目。</li>
+    <li>綠色：代表顯示該候選人「有回答」的題目。</li>
+    <li>紅色：代表顯示該候選人「尚未回答」的題目。</li>
+    <li>灰色：代表顯示該候選人「沒有被提問」的題目。</li>
+  </ul>
+
+  <h2>使用說明</h2>
+  <img src="images/examples/ex1.png">
+  <p>代表：有對連勝文提問的問題</p>
+  <br/><br/>
+  <img src="images/examples/ex2.png">
+  <p>代表：沒有對柯文哲提問的問題</p>
+  <br/><br/>
+  <img src="images/examples/ex3.png">
+  <p>代表：沒有「連勝文已回答」，「柯文哲還沒回答」的問題</p>
+</div>
+</div>
